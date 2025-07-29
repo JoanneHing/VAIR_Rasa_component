@@ -1,0 +1,162 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - meeting_inquiry
+  - location_inquiry
+  - contact_person
+  - visitor_info
+  - help_request
+  - out_of_scope
+  - request_human_agent
+  - thank_you
+  - nlu_fallback 
+
+entities:
+  - employee_name
+  - meeting_time
+  - visitor_name
+  - company
+
+slots:
+  employee_name: # Employee's name to be visited
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: employee_name
+  meeting_time:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: meeting_time
+  visitor_name: # The visitor's name
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: visitor_name
+  company: # The company the visitor is representing
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: company
+  
+  # For backend simulation results
+  meeting_confirmed:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: custom
+  room_name: # The room name for meeting
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: custom
+  employee_present: # Whether the employee is in the office
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: custom
+  employee_reply: # Employee's response from Webex message
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: custom
+
+forms:
+  meeting_details_form:
+    required_slots:
+      - visitor_name
+      - employee_name
+      - meeting_time
+
+# Step 1: Greeting and initial inquiries
+responses:
+  utter_greet:
+    - text: "Good morning! Welcome to NTT Com DD, how may I help you?"
+  utter_ask_visitor_name:
+    - text: "What is your name?"
+  utter_ask_employee_name:
+    - text: "Who are you here to meet?"
+  utter_ask_meeting_time:
+    - text: "At what time is your meeting scheduled?"
+  
+  # Step 2: Meeting checking responses
+  utter_checking_calendar:
+    - text: "Give me a moment, let me check the calendar for your meeting."
+  utter_meeting_confirmed:
+    - text: "Alright! I found your meeting scheduled at {meeting_time} today with {employee_name} in {room_name}."
+  utter_meeting_not_found:
+    - text: "I'm sorry, but I couldn't find a confirmed meeting with {employee_name} at {meeting_time} today."
+  utter_ask_recheck_details:
+    - text: "Could you please double-check the meeting details? You can provide the information again or I can connect you to a human agent for further assistance."
+  
+  # Step 3: Employee location checking responses
+  utter_checking_employee_location:
+    - text: "Now let me check if the employee is currently in the office..."
+  utter_employee_in_office:
+    - text: "Great news! {employee_name} is currently in the office. Let me inform them about your presence."
+  utter_employee_not_in_office_detailed:
+    - text: "I see that {employee_name} is not currently in the office. Let me send them a message to check their availability."
+  
+  # Step 4: Webex messaging responses
+  utter_sending_message_in_office:
+    - text: "I'm sending a message to {employee_name} to let them know that {visitor_name} is here for the meeting."
+  utter_sending_message_not_in_office:
+    - text: "I'm contacting {employee_name} to inform them that {visitor_name} has arrived and to check their availability."
+  utter_waiting_employee_response:
+    - text: "Please wait a moment while I get a response..."
+  
+  # Step 5: Employee response processing
+  utter_employee_coming:
+    - text: "Good news! {employee_name} has confirmed they will be down shortly to meet you. Please make yourself comfortable in our visitor lounge."
+  utter_employee_busy_wait:
+    - text: "{employee_name} is currently in the middle of something but will be with you in just a few minutes. Thank you for your patience."
+  utter_employee_reschedule:
+    - text: "I apologize, but {employee_name} has encountered an urgent matter and needs to reschedule your meeting. They will contact you shortly to arrange a new time."
+  
+  # Step 6: Final instructions
+  utter_final_instructions_wait:
+    - text: "Please relax and make yourself comfortable. If you need any help, please don't hesitate to let me know!"
+  utter_final_instructions_reschedule:
+    - text: "Again, I apologize for the inconvenience. If you need any assistance while you're here or if you have any questions, please feel free to ask me!"
+
+  # Other responses
+  utter_hand_off_to_human:
+    - text: "Sorry I can't help with your request now. I'll connect you with a human agent who can better assist you with your needs."
+  utter_goodbye:
+    - text: "Goodbye! Have a great day and thank you for visiting NTT Com DD."
+  utter_default:
+    - text: "I'm sorry, I didn't quite understand that. Can you please rephrase?"
+  utter_affirm:
+    - text: "Okay, great!"
+  utter_deny:
+    - text: "Understood."
+  utter_thank_you:
+    - text: "You're welcome!"
+  utter_acknowledge_visitor_info:
+    - text: "Thank you for providing your information."
+  utter_acknowledge_location_inquiry:
+    - text: "I can't provide location information, but I can connect you to a human agent who can assist you with that."
+  utter_acknowledge_contact_person:
+    - text: "I can't provide contact a person yet, but I can connect you to a human agent who can assist you with that."
+  utter_acknowledge_help_request:
+    - text: "I'm here to help. What do you need assistance with?"
+
+actions:
+  - action_check_meeting_details
+  - action_locate_employee
+  - action_send_webex_message
+  - action_process_employee_response
+  - action_final_instructions
+  - action_hand_off
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

@@ -1,0 +1,428 @@
+version: '3.1'
+
+nlu:
+- intent: greet
+  examples: |
+    - hello
+    - hi
+    - good morning
+    - good afternoon
+    - good evening
+    - hey
+    - greetings
+    - hi there
+    - hello there
+    - good day
+
+- intent: goodbye
+  examples: |
+    - goodbye
+    - bye
+    - see you later
+    - bye bye
+    - farewell
+    - have a good day
+    - take care
+    - see you
+    - talk to you later
+    - goodbye for now
+
+- intent: affirm
+  examples: |
+    - yes
+    - yeah
+    - yep
+    - sure
+    - of course
+    - absolutely
+    - correct
+    - right
+    - that's right
+    - exactly
+    - indeed
+    - ok
+    - okay
+    - alright
+    - Take your time!
+    - Sure!
+    - Sounds good
+    - Yes, please
+    - I agree
+    - That's correct
+
+- intent: deny
+  examples: |
+    - no
+    - nope
+    - not really
+    - no thanks
+    - no thank you
+    - not interested
+    - that's not right
+    - incorrect
+    - wrong
+    - not correct
+    - definitely not
+    - I disagree
+    - That's false
+
+- intent: meeting_inquiry
+  examples: |
+    - I have a meeting
+    - I'm here for a meeting
+    - I have an appointment
+    - I'm scheduled to meet someone
+    - I'm here to see someone
+    - I have a meeting with [Kim](employee_name)
+    - I'm meeting [Sarah](employee_name) at [09:00 am](meeting_time)
+    - I'm meeting [Sarah](employee_name) at [nine](meeting_time) 
+    - I have an appointment with [John Smith](employee_name)
+    - I'm supposed to meet [Mr. Lee](employee_name) at [02:00 pm](meeting_time)
+    - I'm supposed to meet [Mr. Lee](employee_name) at [two](meeting_time)
+    - I'm here for my [10:30 am](meeting_time) meeting with [Mike](employee_name)
+    - Meeting with [Jennifer](employee_name) at [03:00 pm](meeting_time)
+    - Meeting with [Jennifer](employee_name) at [three](meeting_time)
+    - I have a [09:00 am](meeting_time) appointment with [Kim-san](employee_name)
+    - I have a [nine](meeting_time) appointment with [Kim-san](employee_name)
+    - Scheduled to meet [Tom](employee_name) at [11:30 am](meeting_time)
+    - Scheduled to meet [Tom](employee_name) at [eleven](meeting_time)
+    - My name is [John Wick](visitor_name) and I have a meeting with [Kim-san](employee_name) at [09:00 am](meeting_time).
+    - My name is [John Wick](visitor_name) and I have a meeting with [Kim-san](employee_name) at [nine](meeting_time).
+    - I'm [John](visitor_name) here for a meeting with [Kim-san](employee_name) at [09:00 am](meeting_time).
+    - I'm [John](visitor_name) here for a meeting with [Kim-san](employee_name) at [nine](meeting_time).
+    - [Sarah](visitor_name) for [Dr. Johnson](employee_name) at [10:00 am](meeting_time).
+    - [Sarah](visitor_name) for [Dr. Johnson](employee_name) at [ten](meeting_time).
+    - I'm [Joanne](visitor_name) to meet [Kim](employee_name) at [09:00 am](meeting_time).
+    - I'm [Joanne](visitor_name) to meet [Kim](employee_name) at [nine](meeting_time).
+    - My name is [Kelly](visitor_name) and I'm here for [Sarah](employee_name) at [02:00 pm](meeting_time).
+    - My name is [Kelly](visitor_name) and I'm here for [Sarah](employee_name) at [two](meeting_time).
+    - [Tracy](visitor_name) for [Mr Lim](employee_name) at [10:00 am](meeting_time).
+    - [Tracy](visitor_name) for [Mr Lim](employee_name) at [ten](meeting_time).
+    - I have a meeting with [John](employee_name) at [eleven](meeting_time). My name is [Joanne](visitor_name).
+    - I'm [David](visitor_name) here to see [Jennifer Lee](employee_name) at [01:00 pm](meeting_time).
+    - I'm [David](visitor_name) here to see [Jennifer Lee](employee_name) at [one](meeting_time).
+    - [Lisa](visitor_name) has an appointment with [Tom Brown](employee_name) at [04:00 pm](meeting_time).
+    - [Lisa](visitor_name) has an appointment with [Tom Brown](employee_name) at [four](meeting_time).
+    - Meeting with [Alex](employee_name) at [09:30 am](meeting_time). I'm [Robert](visitor_name).
+    - Meeting with [Alex](employee_name) at [nine thirty](meeting_time). I'm [Robert](visitor_name).
+    - [Maria](visitor_name) for [Michael](employee_name) at [05:00 pm](meeting_time).
+    - [Maria](visitor_name) for [Michael](employee_name) at [five](meeting_time).
+    - [Emma](visitor_name) for [Christopher](employee_name) at [08:00 am](meeting_time).
+    - [Emma](visitor_name) for [Christopher](employee_name) at [eight](meeting_time).
+    - I'm [Jessica](visitor_name) and my meeting with [Amanda](employee_name) is at [10:00 am](meeting_time).
+    - I'm [Jessica](visitor_name) and my meeting with [Amanda](employee_name) is at [ten](meeting_time).
+    - [Daniel](visitor_name) to see [Michelle](employee_name) at [02:30 pm](meeting_time).
+    - [Daniel](visitor_name) to see [Michelle](employee_name) at [two thirty](meeting_time).
+    - [Andrew](visitor_name) for [Rachel](employee_name) at [03:45 pm](meeting_time).
+    - [Andrew](visitor_name) for [Rachel](employee_name) at [three forty five](meeting_time).
+    - My name is [Kevin](visitor_name), meeting [Nicole](employee_name) at [11:15 am](meeting_time).
+    - My name is [Kevin](visitor_name), meeting [Nicole](employee_name) at [eleven fifteen](meeting_time).
+    - [Brian](visitor_name) for [Stephanie](employee_name) at [01:45 pm](meeting_time).
+    - [Brian](visitor_name) for [Stephanie](employee_name) at [one fourty five](meeting_time).
+    - I'm [Mark](visitor_name) to meet [Mr. Brown](employee_name) at [04:30 pm](meeting_time).
+    - I'm [Mark](visitor_name) to meet [Mr. Brown](employee_name) at [four thirty](meeting_time).
+    - My name is [Peter](visitor_name) and I have a meeting with [Dr. Smith](employee_name) at [09:00 am](meeting_time).
+    - My name is [Peter](visitor_name) and I have a meeting with [Dr. Smith](employee_name) at [nine](meeting_time).
+    - [Emily](visitor_name) is here for [Ms. Johnson](employee_name) at [10:00 am](meeting_time).
+    - [Emily](visitor_name) is here for [Ms. Johnson](employee_name) at [ten](meeting_time).
+    - I'm [Sam](visitor_name) and I'm meeting [Mr. Brown](employee_name) at [02:00 pm](meeting_time).
+    - I'm [Sam](visitor_name) and I'm meeting [Mr. Brown](employee_name) at [two](meeting_time).
+    - [Victoria](visitor_name) for [Ms. Davis](employee_name) at [03:00 pm](meeting_time).
+    - [Victoria](visitor_name) for [Ms. Davis](employee_name) at [three](meeting_time).
+
+- intent: location_inquiry
+  examples: |
+    - Where is [Kim](employee_name)?
+    - Is [Sarah](employee_name) in the office?
+    - Can you find [John](employee_name)?
+    - Where can I find [Dr. Lee](employee_name)?
+    - Is [Mike](employee_name) here today?
+    - Locate [Jennifer](employee_name)
+    - Find [Tom](employee_name)
+    - Is [Kim-san](employee_name) available?
+    - Where is [the manager](employee_name)?
+    - Is [my contact](employee_name) in?
+    - Where is [Mr Lim](employee_name)?
+    - Is [Kim](employee_name) in?
+    - Is [Dr. Johnson](employee_name) around?
+    - Can you tell me where [Alex](employee_name) is?
+    - Is [Ms. Davis](employee_name) in?
+    - Where can I find [Mr. Green](employee_name)?
+
+- intent: contact_person
+  examples: |
+    - Can you contact [Kim](employee_name)?
+    - Please notify [Sarah](employee_name) that I'm here
+    - Tell [John](employee_name) I've arrived
+    - Let [Dr. Lee](employee_name) know I'm here
+    - Send a message to [Mike](employee_name)
+    - Inform [Jennifer](employee_name) of my arrival
+    - Call [Tom](employee_name)
+    - Notify [Kim-san](employee_name) that I'm waiting
+    - Let them know I'm here
+    - Can you reach out to [my contact](employee_name)?
+    - Please call [Mr Lim](employee_name)
+    - Could you page [Dr. Johnson](employee_name)?
+    - Send a message to [Alex](employee_name)
+    - Can you get [Ms. Davis](employee_name) for me?
+    - I need to contact [Mr. Green](employee_name).
+
+- intent: visitor_info
+  examples: |
+    - My name is [John](visitor_name)
+    - I'm [John Smith](visitor_name)
+    - I am [Dr. Johnson](visitor_name)
+    - [Sarah Williams](visitor_name) is my name
+    - You can call me [Mike](visitor_name)
+    - I'm [Jennifer Lee](visitor_name)
+    - My name is [Tom Brown](visitor_name)
+    - I'm [Kim Park](visitor_name)
+    - [Alex](visitor_name)
+    - [Robert](visitor_name)
+    - [Maria](visitor_name)
+    - [David](visitor_name)
+    - [Lisa](visitor_name)
+    - [James](visitor_name)
+    - [Emma](visitor_name)
+    - [Michael](visitor_name)
+    - [Jessica](visitor_name)
+    - [Christopher](visitor_name)
+    - [Amanda](visitor_name)
+    - [Daniel](visitor_name)
+    - [Michelle](visitor_name)
+    - [Andrew](visitor_name)
+    - [Rachel](visitor_name)
+    - [Kevin](visitor_name)
+    - [Nicole](visitor_name)
+    - [Brian](visitor_name)
+    - [Stephanie](visitor_name)
+    - [Mark](visitor_name)
+    - It's [John](visitor_name)
+    - Call me [Sarah](visitor_name)
+    - The name is [Mike](visitor_name)
+    - I go by [Alex](visitor_name)
+    - [Dr. Smith](visitor_name)
+    - [Ms. Johnson](visitor_name)
+    - [Mr. Brown](visitor_name)
+    - I'm [Joanne](visitor_name)
+    - My name is [Kelly](visitor_name)
+    - I am [Tracy](visitor_name)
+    - My name is [Chris](visitor_name)
+    - I'm [Laura](visitor_name)
+    - [Peter](visitor_name) here
+    - My name is [Emily](visitor_name).
+    - I'm [Sam](visitor_name).
+    - [Victoria](visitor_name) is my name.
+    - This is [Mr. Jones](visitor_name).
+    - I am [Ms. White](visitor_name).
+    - My name is [Sarah](visitor_name)
+
+- intent: help_request
+  examples: |
+    - Can you help me?
+    - I need assistance
+    - I need help
+    - Can you assist me?
+    - I have a question
+    - I need information
+    - Can you guide me?
+    - I'm not sure what to do
+    - What should I do?
+    - I need support
+    - Could you please help?
+    - I need some guidance
+    - I'm looking for help
+    - Can you provide some assistance?
+    - I require help
+    - I'm stuck, help me please.
+
+- intent: out_of_scope
+  examples: |
+    - What's the weather like?
+    - Where is the nearest restaurant?
+    - How do I get to the airport?
+    - What time is it?
+    - Can you book a taxi?
+    - I want to order food
+    - Where can I park?
+    - What's the WiFi password?
+    - Can you fix my computer?
+    - I need technical support
+    - Where is the bathroom?
+    - Can you help me with my phone?
+    - I want to complain about something
+    - Can you give me directions?
+    - What's the company stock price?
+    - Tell me a joke
+    - What's your name?
+    - I'm bored
+    - What's the meaning of life?
+    - Play a song
+    - What's your favorite color?
+
+- intent: request_human_agent
+  examples: |
+    - I want to speak to a human
+    - Connect me to a person
+    - I need to talk to someone
+    - Can I speak to a real person?
+    - Transfer me to a human receptionist
+    - I want to talk to a human agent
+    - Get me a real person
+    - I need human assistance
+    - Can you connect me to someone?
+    - I want to speak to a staff member
+    - Please transfer me
+    - I need to speak to a live agent
+    - Can you put me through to someone?
+    - I need to talk to a supervisor
+    - Can I get a human?
+
+- intent: thank_you
+  examples: |
+    - thank you
+    - thanks
+    - thank you very much
+    - thanks a lot
+    - much appreciated
+    - thanks so much
+    - thank you for your help
+    - I appreciate it
+    - thanks for the assistance
+    - grateful for your help
+    - thank you for your time
+    - You've been very helpful
+    - Thanks a bunch
+    - I'm very thankful
+    - Cheers
+
+- intent: nlu_fallback
+  examples: |
+    - I don't understand
+    - What?
+    - Huh?
+    - Can you repeat that?
+    - I'm confused
+    - That doesn't make sense
+    - Sorry, I don't know what you are talking about.
+    - I don't get it.
+    - Can you say that again?
+    - I'm not following
+    - I didn't catch that
+    - Please rephrase
+    - I don't know
+    - What did you say?
+
+- lookup: employee_name
+  examples: |
+    - Kim
+    - Kim-san
+    - Sarah
+    - John
+    - Dr. Lee
+    - Mike
+    - Jennifer
+    - Tom
+    - John Smith
+    - Sarah Williams
+    - Dr. Johnson
+    - Mike Chen
+    - Jennifer Lee
+    - Tom Brown
+    - Kim Park
+    - Alex
+    - Robert
+    - Maria
+    - David
+    - Lisa
+    - James
+    - Emma
+    - Michael
+    - Jessica
+    - Christopher
+    - Amanda
+    - Daniel
+    - Michelle
+    - Andrew
+    - Rachel
+    - Kevin
+    - Nicole
+    - Brian
+    - Stephanie
+    - Mark
+    - Mr Lim
+    - Ms. Davis
+    - Dr. White
+    - Mr. Green
+    - Ms. Black
+    - Mr. Anderson
+    - Ms. Taylor
+    - Dr. Clark
+    - Professor Jones
+
+- lookup: visitor_name
+  examples: |
+    - John
+    - Sarah
+    - Mike
+    - Alex
+    - Robert
+    - Maria
+    - David
+    - Lisa
+    - James
+    - Emma
+    - Michael
+    - Jessica
+    - Christopher
+    - Amanda
+    - Daniel
+    - Michelle
+    - Andrew
+    - Rachel
+    - Kevin
+    - Nicole
+    - Brian
+    - Stephanie
+    - Mark
+    - John Smith
+    - Sarah Williams
+    - Dr. Johnson
+    - Mike Chen
+    - Jennifer Lee
+    - Tom Brown
+    - Kim Park
+    - Dr. Smith
+    - Ms. Johnson
+    - Mr. Brown
+    - John Wick
+    - Joanne
+    - Kelly
+    - Tracy
+    - Chris
+    - Laura
+    - Peter
+    - Emily
+    - Sam
+    - Victoria
+    - Mr. Jones
+    - Ms. White
+    - Mr. Davis
+    - Ms. Green
+    - Dr. Black
+
+- regex: meeting_time
+  examples: |
+    - \d{1,2}:\d{2}\s*(?:am|pm) # Matches 09:00 am, 10:30 pm
+    - \d{1,2}\s*(?:am|pm) # Matches 9 am, 2 pm
+    - \d{1,2}\s*o'clock # Matches 9 o'clock, 10 o'clock
+    - noon
+    - midnight
+    - \d{1,2}:\d{2} # Matches 14:00 (assuming 24-hour, will be converted by action)
+    - \d{1,2} # Matches 9, 10 (will be converted by action)
+    - nine
+    - ten
+    - eleven
+    - four
+    - twelve
+    - one

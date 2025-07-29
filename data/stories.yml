@@ -1,0 +1,156 @@
+version: "3.1"
+stories:
+  # Story 1: Successful meeting flow - employee in office, coming down
+  - story: Successful meeting flow - employee coming
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: meeting_inquiry 
+        entities:
+          - visitor_name: "John Wick"
+          - employee_name: "Kim"
+          - meeting_time: "nine"
+      - action: meeting_details_form
+      - active_loop: meeting_details_form
+      - slot_was_set:
+          - visitor_name: "John Wick"
+          - employee_name: "Kim"
+          - meeting_time: "nine"
+      - active_loop: null
+      - action: action_check_meeting_details
+      - slot_was_set:
+          - meeting_confirmed: true
+          - room_name: "Kiji room"
+      - action: action_locate_employee
+      - slot_was_set:
+          - employee_present: true
+      - action: action_send_webex_message
+      - slot_was_set:
+          - employee_reply: "coming"
+      - action: action_process_employee_response
+      - action: action_final_instructions
+
+  # Story 2: Meeting flow - employee in office but busy, needs to wait
+  - story: Meeting flow - employee busy, visitor waits
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: meeting_inquiry 
+        entities:
+          - visitor_name: "Sarah"
+          - employee_name: "Kim"
+          - meeting_time: "two"
+      - action: meeting_details_form
+      - active_loop: meeting_details_form
+      - slot_was_set:
+          - visitor_name: "Sarah"
+          - employee_name: "Kim"
+          - meeting_time: "two"
+      - active_loop: null
+      - action: action_check_meeting_details
+      - slot_was_set:
+          - meeting_confirmed: true
+          - room_name: "Meeting room A"
+      - action: action_locate_employee
+      - slot_was_set:
+          - employee_present: true
+      - action: action_send_webex_message
+      - slot_was_set:
+          - employee_reply: "wait"
+      - action: action_process_employee_response
+      - action: action_final_instructions
+
+  # Story 3: Meeting flow - employee not in office, needs to reschedule
+  - story: Meeting flow - employee not in office, reschedule
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: meeting_inquiry
+        entities:
+          - visitor_name: "John Wick"
+          - employee_name: "Kim"
+          - meeting_time: "eleven"
+      - action: meeting_details_form
+      - active_loop: meeting_details_form
+      - slot_was_set:
+          - visitor_name: "John Wick"
+          - employee_name: "Kim"
+          - meeting_time: "eleven"
+      - active_loop: null
+      - action: action_check_meeting_details
+      - slot_was_set:
+          - meeting_confirmed: true
+          - room_name: "Kiji room"
+      - action: action_locate_employee
+      - slot_was_set:
+          - employee_present: false
+      - action: action_send_webex_message
+      - slot_was_set:
+          - employee_reply: "reschedule"
+      - action: action_process_employee_response
+      - action: action_final_instructions
+
+  # Story 4: Meeting not found flow
+  - story: Meeting not found flow
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: meeting_inquiry
+        entities:
+          - visitor_name: "John Wick"
+          - employee_name: "Someone"
+          - meeting_time: "ten"
+      - action: meeting_details_form
+      - active_loop: meeting_details_form
+      - slot_was_set:
+          - visitor_name: "John Wick"
+          - employee_name: "Someone Else"
+          - meeting_time: "ten"
+      - active_loop: null
+      - action: action_check_meeting_details
+      - slot_was_set:
+          - meeting_confirmed: false
+
+  # Story 5: User provides incomplete information initially 
+  - story: Incomplete information - form handles collection
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: meeting_inquiry
+        entities:
+          - employee_name: "Kim"
+      - action: meeting_details_form
+      - active_loop: meeting_details_form
+      - active_loop: null
+      - action: action_check_meeting_details
+      - slot_was_set:
+          - meeting_confirmed: true
+          - room_name: "Kiji room"
+      - action: action_locate_employee
+      - action: action_send_webex_message
+      - action: action_process_employee_response
+      - action: action_final_instructions
+
+  # Story 6: Direct hand-off request
+  - story: Direct hand-off request
+    steps:
+      - intent: request_human_agent
+      - action: action_hand_off
+
+  # Story 7: Out of scope request
+  - story: Out of scope request
+    steps:
+      - intent: out_of_scope
+      - action: action_hand_off
+
+  # Story 8: NLU fallback to hand-off
+  - story: NLU fallback to hand-off
+    steps:
+      - intent: nlu_fallback
+      - action: action_hand_off
+
+  # Story 9: Visitor provides info standalone
+  - story: Visitor provides info standalone
+    steps:
+      - intent: visitor_info
+      - action: utter_acknowledge_visitor_info

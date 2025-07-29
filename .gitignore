@@ -1,0 +1,12 @@
+.rasa/
+__pycache__/
+*.pyc                 
+.venv/                
+env/                   
+*venv*/                
+.DS_Store          
+*.log                   
+data/__snapshots__/    
+.pytest_cache/         
+.ipynb_checkpoints/
+models/ 

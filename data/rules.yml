@@ -1,0 +1,114 @@
+version: "3.1"
+rules:
+  - rule: Say goodbye anytime the user says goodbye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - rule: Greet the user
+    steps:
+      - intent: greet
+      - action: utter_greet
+
+  - rule: Activate meeting details form on meeting inquiry
+    steps:
+      - intent: meeting_inquiry
+      - action: meeting_details_form
+      - active_loop: meeting_details_form
+
+  # Meeting confirmed and employee present (in office)
+  - rule: Meeting confirmed, employee in office - full detailed flow
+    condition:
+      - active_loop: meeting_details_form
+      - slot_was_set:
+          - meeting_confirmed: true
+      - slot_was_set:
+          - employee_present: true
+    steps:
+      - action: meeting_details_form
+      - active_loop: null
+      - action: action_check_meeting_details 
+      - action: action_locate_employee
+      - action: action_send_webex_message
+      - action: action_process_employee_response
+      - action: action_final_instructions
+
+  # Meeting confirmed but employee not present (not in office)
+  - rule: Meeting confirmed, employee not in office - full detailed flow
+    condition:
+      - active_loop: meeting_details_form
+      - slot_was_set:
+          - meeting_confirmed: true
+      - slot_was_set:
+          - employee_present: false
+    steps:
+      - action: meeting_details_form
+      - active_loop: null
+      - action: action_check_meeting_details
+      - action: action_locate_employee
+      - action: action_send_webex_message
+      - action: action_process_employee_response
+      - action: action_final_instructions
+
+  # Meeting not confirmed - hand off to human
+  - rule: Meeting not confirmed - hand off
+    condition:
+      - active_loop: meeting_details_form
+      - slot_was_set:
+          - meeting_confirmed: false
+    steps:
+      - action: meeting_details_form
+      - active_loop: null
+      - action: action_check_meeting_details
+      - action: action_hand_off
+
+  # Basic interaction rules
+  - rule: Respond to affirm
+    steps:
+      - intent: affirm
+      - action: utter_affirm
+
+  - rule: Respond to deny
+    steps:
+      - intent: deny
+      - action: utter_deny
+
+  - rule: Respond to thank you
+    steps:
+      - intent: thank_you
+      - action: utter_thank_you
+
+  - rule: Hand off to human on request_human_agent intent
+    steps:
+      - intent: request_human_agent
+      - action: action_hand_off
+
+  - rule: Hand off to human on out_of_scope intent
+    steps:
+      - intent: out_of_scope
+      - action: action_hand_off
+
+  - rule: Hand off to human on NLU fallback
+    steps:
+      - intent: nlu_fallback
+      - action: action_hand_off
+
+  - rule: Acknowledge visitor info
+    steps:
+      - intent: visitor_info
+      - action: utter_acknowledge_visitor_info
+
+  - rule: Acknowledge location inquiry and hand off
+    steps:
+      - intent: location_inquiry
+      - action: utter_acknowledge_location_inquiry
+
+  - rule: Acknowledge contact person and hand off
+    steps:
+      - intent: contact_person
+      - action: utter_acknowledge_contact_person
+
+  - rule: Acknowledge help request and hand off
+    steps:
+      - intent: help_request
+      - action: utter_acknowledge_help_request
