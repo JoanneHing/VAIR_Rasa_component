@@ -11,7 +11,7 @@ Ensure you have the following installed:
 * **Rasa Open Source Version**: You can install it via pip:
 
     ```bash
-    pip install rasa
+    pip install rasa-sdk
     ```
 
 * **Virtual Environment (Recommended)**: This is to manage project dependencies.
